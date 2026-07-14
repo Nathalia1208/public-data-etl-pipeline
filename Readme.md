@@ -46,7 +46,6 @@ flowchart TD
 # Tecnologias utilizadas
 
 -| Tecnologia | Finalidade |
-|------------|------------|
 | Python | Desenvolvimento do pipeline |
 | Pandas | Transformação de dados |
 | Requests | Consumo da API |
