@@ -45,12 +45,14 @@ flowchart TD
 ---
 # Tecnologias utilizadas
 
-- Python
-- Pandas
-- DuckDB
-- Parquet
-- SQL
-- Requests
+-| Tecnologia | Finalidade |
+|------------|------------|
+| Python | Desenvolvimento do pipeline |
+| Pandas | Transformação de dados |
+| Requests | Consumo da API |
+| DuckDB | Banco analítico |
+| SQL | Consultas |
+| Parquet | Armazenamento otimizado |
 
 ---
 ## Por que DuckDB?
