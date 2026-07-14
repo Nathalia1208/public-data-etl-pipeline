@@ -33,7 +33,7 @@ O pipeline realiza:
 
 ```mermaid
 flowchart TD
-    A[API do IBGE] --> B[Extract]
+    A[API do IBGE] --> B[Extração]
     C[CSV Público] --> B
     B --> D[Transformação]
     D --> E[DuckDB]
