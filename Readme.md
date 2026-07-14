@@ -43,14 +43,15 @@ flowchart TD
 ```
 
 ---
-# Tecnologias utilizadas
+## Tecnologias utilizadas
 
--| Tecnologia | Finalidade |
+| Tecnologia | Finalidade |
+|------------|------------|
 | Python | Desenvolvimento do pipeline |
 | Pandas | Transformação de dados |
 | Requests | Consumo da API |
 | DuckDB | Banco analítico |
-| SQL | Consultas |
+| SQL | Consultas analíticas |
 | Parquet | Armazenamento otimizado |
 
 ---
