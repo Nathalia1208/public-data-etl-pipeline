@@ -174,6 +174,16 @@ pip install pandas requests duckdb pyarrow
 ```bash
 python src/main.py
 ```
+---
+## Pipeline Output
+
+Depois da execução do pipeline é gerado:
+
+- Banco analítico DuckDB (`etl.db`)
+- Arquivos Parquet 
+- Dados particionados por UF
+- Estruturas para análise em SQL
+
 
 ---
 
