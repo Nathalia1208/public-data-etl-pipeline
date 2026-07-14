@@ -16,7 +16,26 @@ O pipeline realiza:
 - Consultas analíticas utilizando SQL
 
 ---
+# Public Data ETL Pipeline
 
+Pequena descrição do projeto.
+
+---
+
+## Fluxo do Pipeline
+
+```mermaid
+flowchart TD
+    A[API do IBGE] --> B[Extract]
+    C[CSV Público] --> B
+    B --> D[Transform]
+    D --> E[DuckDB]
+    E --> F[Consultas SQL]
+    F --> G[Exportação Parquet]
+    G --> H[Analytics]
+```
+
+---
 # Tecnologias utilizadas
 
 - Python
