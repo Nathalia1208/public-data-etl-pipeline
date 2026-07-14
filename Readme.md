@@ -35,11 +35,11 @@ O pipeline realiza:
 flowchart TD
     A[API do IBGE] --> B[Extract]
     C[CSV Público] --> B
-    B --> D[Transform]
+    B --> D[Transformação]
     D --> E[DuckDB]
     E --> F[Consultas SQL]
     F --> G[Exportação Parquet]
-    G --> H[Analytics]
+    G --> H[Análise]
 ```
 
 ---
