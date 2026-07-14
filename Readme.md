@@ -16,9 +16,16 @@ O pipeline realiza:
 - Consultas analíticas utilizando SQL
 
 ---
-# Public Data ETL Pipeline
+## Skills Demonstrated
 
-Pequena descrição do projeto.
+- ETL Pipeline Development
+- Data Extraction from REST APIs
+- Data Transformation with Pandas
+- SQL Analytics
+- DuckDB
+- Parquet
+- Data Modeling
+- Data Engineering
 
 ---
 
