@@ -16,7 +16,7 @@ O pipeline realiza:
 - Consultas analíticas utilizando SQL
 
 ---
-## Skills Demonstrated
+# Skills Demonstrated
 
 - ETL Pipeline Development
 - Data Extraction from REST APIs
@@ -29,7 +29,7 @@ O pipeline realiza:
 
 ---
 
-## Fluxo do Pipeline
+# Fluxo do Pipeline
 
 ```mermaid
 flowchart TD
@@ -43,7 +43,7 @@ flowchart TD
 ```
 
 ---
-## Tecnologias utilizadas
+# Tecnologias utilizadas
 
 | Tecnologia | Finalidade |
 |------------|------------|
@@ -55,7 +55,7 @@ flowchart TD
 | Parquet | Armazenamento otimizado |
 
 ---
-## Por que DuckDB?
+# Por que DuckDB?
 
 DuckDB foi escolhido por oferecer processamento analítico extremamente rápido, suporte nativo a Parquet e integração simples com Pandas, sendo muito utilizado em pipelines modernos de dados.
 
