@@ -1,6 +1,9 @@
-# Pipeline ETL de Dados Públicos
+# Public Data ETL Pipeline | Python • DuckDB • Parquet
 
-Projeto de Engenharia de Dados desenvolvido em Python com foco em ingestão, transformação e carga de dados públicos brasileiros.
+Pipeline ETL desenvolvido em Python para ingestão, transformação e armazenamento de dados públicos brasileiros utilizando DuckDB e Parquet.
+
+Projeto de Engenharia de Dados que implementa um pipeline ETL completo utilizando dados públicos do IBGE.
+O pipeline realiza ingestão, transformação, persistência em DuckDB e exportação em Parquet, simulando um fluxo utilizado em ambientes corporativos.
 
 O pipeline realiza:
 
@@ -24,7 +27,11 @@ O pipeline realiza:
 - Requests
 
 ---
+## Por que DuckDB?
 
+DuckDB foi escolhido por oferecer processamento analítico extremamente rápido, suporte nativo a Parquet e integração simples com Pandas, sendo muito utilizado em pipelines modernos de dados.
+
+---
 # Estrutura do Projeto
 
 ```text
