@@ -19,48 +19,37 @@ Construir um pipeline ETL completo capaz de:
 
 ---
 
-# Arquitetura do Pipeline
+## Arquitetura do Pipeline
 
-```text
-                 API do IBGE (JSON)
-                         │
-                         │
-                         ▼
-                  ETAPA 1 - EXTRACT
-                         │
-                         │
-CSV Complementar ─────────┘
-                         │
-                         ▼
-                  Camada RAW
-                         │
-                         ▼
-                ETAPA 2 - TRANSFORM
-                         │
-         ├────────────────────────────┐
-         │                            │
- Normalização                Padronização
-         │                            │
-         └──────────────┬─────────────┘
-                        ▼
-                Camada PROCESSED
-                        │
-                        ▼
-                 ETAPA 3 - LOAD
-                        │
-                        ▼
-                   DuckDB
-                        │
-                 LEFT JOIN
-                        │
-                        ▼
-             Tabela Consolidada
-                        │
-                        ▼
-      Exportação Parquet Particionada
-                        │
-                        ▼
-                Power BI / Analytics
+```mermaid
+flowchart TD
+
+    A[API do IBGE<br/>JSON] --> C[Extract]
+    B[CSV Complementar<br/>Municípios Brasileiros] --> C
+
+    C --> D[Camada Raw]
+
+    D --> E[Transform]
+
+    E --> F[Normalização do JSON]
+    F --> G[Padronização das Colunas]
+    G --> H[Validação dos Dados]
+
+    H --> I[Camada Processed]
+
+    I --> J[Load]
+
+    J --> K[(DuckDB)]
+
+    K --> L[LEFT JOIN<br/>id_municipio]
+
+    L --> M[Tabela Consolidada]
+
+    M --> N[Exportação Parquet]
+
+    N --> O[Particionamento por UF]
+
+    O --> P[Power BI / Analytics]
 ```
 
 ---
@@ -288,13 +277,13 @@ logs/pipeline.log
 
 # Roadmap
 
-## ✅ v1.0
+##  v1.0
 
 - Pipeline ETL funcional
 - DuckDB
 - Exportação Parquet
 
-## ✅ v1.1
+##  v1.1
 
 - Logging estruturado
 - Tratamento robusto de erros
@@ -304,7 +293,7 @@ logs/pipeline.log
 - Métricas da execução
 - Padronização dos logs
 
-## 🚧 v1.2
+##  v1.2
 
 - Configuração via `.env`
 - `.env.example`
