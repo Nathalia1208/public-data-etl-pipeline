@@ -1,5 +1,10 @@
 # Public Data ETL Pipeline
-
+![Python](https://img.shields.io/badge/Python-3.12-blue?logo=python)
+![DuckDB](https://img.shields.io/badge/DuckDB-Analytics-yellow)
+![Pandas](https://img.shields.io/badge/Pandas-Data%20Processing-purple?logo=pandas)
+![Parquet](https://img.shields.io/badge/Parquet-Storage-brightgreen)
+![Status](https://img.shields.io/badge/Status-Completed-success)
+![License](https://img.shields.io/badge/License-MIT-green)
 Pipeline ETL desenvolvido em Python para ingestão, transformação, integração e armazenamento de dados públicos brasileiros utilizando a API do IBGE, DuckDB e Parquet.
 
 Este projeto foi desenvolvido com foco em demonstrar conhecimentos em Engenharia de Dados aplicando boas práticas de arquitetura, modularização, validação de dados, tratamento de erros, logging estruturado e armazenamento analítico.
