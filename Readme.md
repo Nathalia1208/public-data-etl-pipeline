@@ -1,229 +1,327 @@
-# Public Data ETL Pipeline | Python • DuckDB • Parquet
+# Public Data ETL Pipeline
 
-Pipeline ETL desenvolvido em Python para ingestão, transformação e armazenamento de dados públicos brasileiros utilizando DuckDB e Parquet.
+Pipeline ETL desenvolvido em Python para ingestão, transformação, integração e armazenamento de dados públicos brasileiros utilizando a API do IBGE, DuckDB e Parquet.
 
-Projeto de Engenharia de Dados que implementa um pipeline ETL completo utilizando dados públicos do IBGE.
-O pipeline realiza ingestão, transformação, persistência em DuckDB e exportação em Parquet, simulando um fluxo utilizado em ambientes corporativos.
-
-O pipeline realiza:
-
-- Extração de dados via API pública do IBGE
-- Ingestão de arquivos CSV públicos
-- Transformação e normalização de dados
-- Armazenamento em DuckDB
-- Exportação otimizada em Parquet
-- Particionamento por UF
-- Consultas analíticas utilizando SQL
-
----
-# Skills Demonstrated
-
-- ETL Pipeline Development
-- Data Extraction from REST APIs
-- Data Transformation with Pandas
-- SQL Analytics
-- DuckDB
-- Parquet
-- Data Modeling
-- Data Engineering
+Este projeto foi desenvolvido com foco em demonstrar conhecimentos em Engenharia de Dados aplicando boas práticas de arquitetura, modularização, validação de dados, tratamento de erros, logging estruturado e armazenamento analítico.
 
 ---
 
-# Fluxo do Pipeline
+# Objetivo
 
-```mermaid
-flowchart TD
-    A[API do IBGE] --> B[Extração]
-    C[CSV Público] --> B
-    B --> D[Transformação]
-    D --> E[DuckDB]
-    E --> F[Consultas SQL]
-    F --> G[Exportação Parquet]
-    G --> H[Análise]
+Construir um pipeline ETL completo capaz de:
+
+- Extrair dados de múltiplas fontes públicas
+- Transformar e padronizar os dados
+- Integrar diferentes bases utilizando SQL
+- Armazenar os dados em um banco analítico
+- Exportar os dados em formato otimizado para Analytics
+- Demonstrar boas práticas utilizadas em projetos reais de Engenharia de Dados
+
+---
+
+# Arquitetura do Pipeline
+
+```text
+                 API do IBGE (JSON)
+                         │
+                         │
+                         ▼
+                  ETAPA 1 - EXTRACT
+                         │
+                         │
+CSV Complementar ─────────┘
+                         │
+                         ▼
+                  Camada RAW
+                         │
+                         ▼
+                ETAPA 2 - TRANSFORM
+                         │
+         ├────────────────────────────┐
+         │                            │
+ Normalização                Padronização
+         │                            │
+         └──────────────┬─────────────┘
+                        ▼
+                Camada PROCESSED
+                        │
+                        ▼
+                 ETAPA 3 - LOAD
+                        │
+                        ▼
+                   DuckDB
+                        │
+                 LEFT JOIN
+                        │
+                        ▼
+             Tabela Consolidada
+                        │
+                        ▼
+      Exportação Parquet Particionada
+                        │
+                        ▼
+                Power BI / Analytics
 ```
 
 ---
-# Tecnologias utilizadas
 
-| Tecnologia | Finalidade |
-|------------|------------|
-| Python | Desenvolvimento do pipeline |
-| Pandas | Transformação de dados |
-| Requests | Consumo da API |
-| DuckDB | Banco analítico |
-| SQL | Consultas analíticas |
-| Parquet | Armazenamento otimizado |
-
----
-# Por que DuckDB?
-
-DuckDB foi escolhido por oferecer processamento analítico extremamente rápido, suporte nativo a Parquet e integração simples com Pandas, sendo muito utilizado em pipelines modernos de dados.
-
----
 # Estrutura do Projeto
 
 ```text
-pipeline-etl-dados-publicos
+pipeline-etl-dados-publicos/
 │
-├── data
-│   ├── raw
-│   ├── processed
-│   ├── curated
+├── data/
+│   ├── raw/
+│   ├── processed/
+│   ├── curated/
 │   └── etl.db
 │
-├── src
+├── logs/
+│   └── pipeline.log
+│
+├── src/
+│   ├── config.py
+│   ├── logging_config.py
 │   ├── extract.py
 │   ├── transform.py
 │   ├── load.py
 │   └── main.py
 │
-└── README.md
+├── requirements.txt
+├── README.md
+└── .gitignore
 ```
 
 ---
 
-# Arquitetura ETL
+# Fontes de Dados
+
+## Fonte 1
+
+**API Pública do IBGE**
+
+Formato:
+
+- JSON
+
+Responsável por fornecer:
+
+- Código do município
+- Nome
+- Região
+- UF
+- Região imediata
+- Região intermediária
+
+---
+
+## Fonte 2
+
+**CSV Público de Municípios Brasileiros**
+
+Formato:
+
+- CSV
+
+Informações complementares:
+
+- Código IBGE
+- Capital
+- Código UF
+- Código SIAFI
+- DDD
+- Fuso horário
+
+---
+
+# Fluxo ETL
 
 ## Extract
 
-Responsável pela ingestão de dados públicos:
-
-- API do IBGE
-- CSV público de municípios brasileiros
-
-Arquivos gerados:
-
-```text
-data/raw
-```
+- Consumo da API do IBGE
+- Download da base complementar
+- Validação das respostas
+- Logging
+- Tratamento de erros
 
 ---
 
 ## Transform
 
-Responsável pelo tratamento dos dados:
-
 - Normalização do JSON
-- Padronização de colunas
-- Tratamento de estruturas aninhadas
-- Geração de arquivos tratados
-
-Arquivos gerados:
-
-```text
-data/processed
-```
+- Seleção das colunas
+- Renomeação para padrão snake_case
+- Validação dos arquivos
+- Validação das colunas obrigatórias
+- Conversão de tipos
+- Validação de IDs
 
 ---
 
 ## Load
 
-Responsável pelo carregamento analítico:
-
-- Criação de tabelas no DuckDB
-- Execução de JOINs
-- Consultas SQL
-- Exportação em Parquet
+- Carregamento no DuckDB
+- Criação das tabelas analíticas
+- LEFT JOIN por `id_municipio`
+- Validação da integridade do JOIN
+- Exportação para Parquet
 - Particionamento por UF
 
-Arquivos gerados:
+---
+
+# Tecnologias Utilizadas
+
+| Tecnologia | Finalidade |
+|------------|------------|
+| Python | Desenvolvimento do pipeline |
+| Pandas | Manipulação de dados |
+| Requests | Consumo da API |
+| DuckDB | Banco analítico |
+| SQL | Integração dos dados |
+| Parquet | Armazenamento otimizado |
+| Logging | Monitoramento da execução |
+
+---
+
+# Funcionalidades
+
+- Extração de dados da API do IBGE
+- Download automático da base complementar
+- Tratamento robusto de erros
+- Logging estruturado
+- Validação dos dados
+- Padronização dos esquemas
+- Integração entre múltiplas fontes
+- Banco analítico DuckDB
+- Exportação em Parquet
+- Particionamento por UF
+- Métricas da execução
+
+---
+
+# Exemplo de Logs
 
 ```text
-data/curated
+2026-07-20 12:07:22 | INFO | ETAPA 1/3 - EXTRAÇÃO | INÍCIO
+
+2026-07-20 12:07:25 | INFO | ETAPA 2/3 - TRANSFORMAÇÃO | CONCLUÍDA
+
+2026-07-20 12:07:26 | INFO | ETAPA 3/3 - CARGA | CONCLUÍDA
+
+2026-07-20 12:07:26 | INFO | Pipeline ETL concluído com sucesso.
 ```
 
 ---
 
-# Funcionalidades implementadas
+# Como executar
 
-- Consumo de API pública
-- Leitura de CSV
-- Transformação de dados
-- JOIN entre tabelas
-- SQL analítico
-- Exportação Parquet
-- Particionamento de dados
-- Estrutura em camadas
-
----
-
-# Exemplo de JOIN
-
-```sql
-SELECT
-    m.municipio,
-    m.uf,
-    p.ddd
-FROM municipios m
-LEFT JOIN populacao p
-    ON m.id_municipio = p.id_municipio
-```
-
----
-
-# Como executar o projeto
-
-## Instalar dependências
+Clone o repositório
 
 ```bash
-pip install pandas requests duckdb pyarrow
+git clone https://github.com/Nathalia1208/public-data-etl-pipeline.git
 ```
 
-## Executar pipeline completo
+Entre na pasta
+
+```bash
+cd public-data-etl-pipeline
+```
+
+Instale as dependências
+
+```bash
+pip install -r requirements.txt
+```
+
+Execute o pipeline
 
 ```bash
 python src/main.py
 ```
----
-## Pipeline Output
-
-Depois da execução do pipeline é gerado:
-
-- Banco analítico DuckDB (`etl.db`)
-- Arquivos Parquet 
-- Dados particionados por UF
-- Estruturas para análise em SQL
-
 
 ---
 
-# Estrutura de saída
+# Saídas Geradas
 
-## Banco DuckDB
+Após a execução serão criados:
 
 ```text
+data/raw/
+
+data/processed/
+
 data/etl.db
-```
 
-## Arquivos Parquet
+data/curated/
 
-```text
-data/curated
+logs/pipeline.log
 ```
 
 ---
 
-# Objetivos do projeto
+# Skills Demonstrated
 
-Este projeto foi desenvolvido para prática de:
+## Engenharia de Dados
 
-- Engenharia de Dados
 - ETL
-- Manipulação de dados públicos
-- SQL analítico
+- Data Integration
+- Data Validation
+- Data Modeling
+- Data Quality
+- SQL Analytics
+
+## Desenvolvimento
+
+- Python
+- Modularização
+- Logging
+- Tratamento de Erros
+- Organização de Código
+- Configuração Centralizada
+
+## Armazenamento
+
 - DuckDB
-- Particionamento de dados
-- Estruturação de pipelines
-- Modelagem analítica
+- Parquet
 
 ---
 
-# Melhorias futuras
+# Roadmap
 
-- Integração com Power BI
-- Logging
+## ✅ v1.0
+
+- Pipeline ETL funcional
+- DuckDB
+- Exportação Parquet
+
+## ✅ v1.1
+
+- Logging estruturado
+- Tratamento robusto de erros
+- Arquitetura modular
+- Configuração centralizada
+- Validação dos dados
+- Métricas da execução
+- Padronização dos logs
+
+## 🚧 v1.2
+
+- Configuração via `.env`
+- `.env.example`
+- Configuração desacoplada do código
+
+## Planejamento futuro
+
+- Testes automatizados com Pytest
 - Docker
-- Airflow
-- Testes automatizados
+- GitHub Actions
 - Incremental Load
-- Dashboard analítico
+- Data Quality
+- Airflow
+- Dashboard Power BI
+
+---
+
+# Licença
+
+Projeto desenvolvido para fins de estudo, demonstração de portfólio e aprendizado em Engenharia de Dados.
