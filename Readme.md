@@ -5,6 +5,7 @@
 ![Parquet](https://img.shields.io/badge/Parquet-Storage-brightgreen)
 ![Status](https://img.shields.io/badge/Status-Completed-success)
 ![License](https://img.shields.io/badge/License-MIT-green)
+
 Pipeline ETL desenvolvido em Python para ingestão, transformação, integração e armazenamento de dados públicos brasileiros utilizando a API do IBGE, DuckDB e Parquet.
 
 Este projeto foi desenvolvido com foco em demonstrar conhecimentos em Engenharia de Dados aplicando boas práticas de arquitetura, modularização, validação de dados, tratamento de erros, logging estruturado e armazenamento analítico.
